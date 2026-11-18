@@ -11,3 +11,8 @@ node_modules/
 # Local tooling artifacts
 scripts/__pycache__/
 *.log
+
+# Real env files (never commit); keep the .env.example template
+.env
+.env.*
+!.env.example

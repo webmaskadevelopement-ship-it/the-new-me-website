@@ -11,7 +11,8 @@
     "build": "echo 'Static production ready. (Tailwind CSS is precompiled in vendor/tailwind.prod.css)'",
     "deploy": "./deploy.sh",
     "push": "./deploy.sh",
-    "build:css": "tailwindcss -c scripts/tailwind.config.js -i scripts/tailwind.input.css -o vendor/tailwind.prod.css --minify"
+    "build:css": "tailwindcss -c scripts/tailwind.config.js -i scripts/tailwind.input.css -o vendor/tailwind.prod.css --minify",
+    "scan:secrets": "bash scripts/scan-secrets.sh"
   },
   "keywords": [
     "wellness",

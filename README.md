@@ -54,6 +54,30 @@ git remote add origin git@github.com:<you>/<repo>.git   # or gh repo create
 
 > ⚠️ Security: the old repo's remote contained a live GitHub PAT. **Revoke/rotate it** in GitHub settings → Developer settings → Tokens. The new repo has no token anywhere.
 
+### Credentials — API-token only (never embedded)
+
+All deployments use **API-based tokens injected at runtime**; nothing is stored in this repo, in `.git/config`, or in remote URLs.
+
+| Purpose | Where the token lives | How it's used |
+|---|---|---|
+| Git push (manual) | `GH_TOKEN` env var, or `gh auth login` | `deploy.sh` reads it; it refuses to run against a remote URL containing credentials |
+| Netlify deploy (CI) | GitHub repo **secrets** `NETLIFY_AUTH_TOKEN` + `NETLIFY_SITE_ID` | `.github/workflows/deploy-netlify.yml` injects them at runtime |
+| Anything else | `.env` (gitignored) — copy `.env.example` | Local tooling only |
+
+Setup:
+
+```bash
+# one-time
+gh auth login
+git remote add origin git@github.com:<you>/<repo>.git
+bash scripts/install-hooks.sh        # pre-commit secret scan
+
+# if deploying via GitHub Actions instead
+# repo Settings → Secrets → Actions → add NETLIFY_AUTH_TOKEN + NETLIFY_SITE_ID
+```
+
+Guards: `scripts/scan-secrets.sh` runs in pre-commit (installed by `scripts/install-hooks.sh`) and via `npm run scan:secrets`. `deploy.sh` hard-fails on credential-bearing remote URLs. `.env`/`.env.*` are gitignored; `.env.example` is the committed template.
+
 ## Image pipeline
 
 `scripts/optimize-images.py` recompresses every WebP @ quality 85 / method 6 (identical dimensions, atomic writes). Run from the repo root:

@@ -1,0 +1,37 @@
+name: Deploy to Netlify (API-token)
+
+# CI/CD using API-based tokens only:
+#   - NETLIFY_AUTH_TOKEN — Netlify personal access token (API token),
+#     stored as a GitHub Actions *repository secret*, injected at runtime.
+#   - NETLIFY_SITE_ID    — Netlify site API ID (repository secret).
+# No token ever appears in this repo, commit history, or remote URLs.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install Netlify CLI
+        run: npm install -g netlify-cli
+
+      - name: Deploy to Netlify
+        run: netlify deploy --prod --dir=.
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
