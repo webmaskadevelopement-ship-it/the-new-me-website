@@ -5,12 +5,13 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node server.mjs",
-    "dev": "node server.mjs",
-    "serve": "node server.mjs",
-    "build": "echo 'Static production ready.'",
+    "start": "node scripts/dev-server.mjs",
+    "dev": "node scripts/dev-server.mjs",
+    "serve": "node scripts/dev-server.mjs",
+    "build": "echo 'Static production ready. (Tailwind CSS is precompiled in vendor/tailwind.prod.css)'",
     "deploy": "./deploy.sh",
-    "push": "./deploy.sh"
+    "push": "./deploy.sh",
+    "build:css": "tailwindcss -c scripts/tailwind.config.js -i scripts/tailwind.input.css -o vendor/tailwind.prod.css --minify"
   },
   "keywords": [
     "wellness",
