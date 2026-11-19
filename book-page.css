@@ -1258,3 +1258,18 @@ html:has(body.has-scroll-film) {
     padding: 0 1.1rem;
   }
 }
+
+/* Pull-quote block: centered stack, no drift */
+.book-page-chapter.bp-quote {
+  place-self: center;
+  text-align: center;
+  padding: 0 1.5rem;
+  max-width: 44rem;
+}
+
+.bp-quote-line,
+.bp-quote-sub,
+.bp-quote-source {
+  margin-left: auto;
+  margin-right: auto;
+}
