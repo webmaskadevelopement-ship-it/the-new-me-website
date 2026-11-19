@@ -1037,8 +1037,9 @@ html:has(body.has-scroll-film) {
 .bp-line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.08em;
-  margin-bottom: -0.08em;
+  /* .14em reserves room for descenders/italics — .08em clipped g/y/p */
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 .bp-line-inner {
@@ -1101,6 +1102,27 @@ html:has(body.has-scroll-film) {
   float: left;
 }
 
+/* Short viewports: keep the whole spread inside the pinned screen */
+@media (max-height: 780px) {
+  .book-page-chapter.on-white .bp-spread {
+    gap: 2rem;
+  }
+
+  .book-page-chapter.on-white .bp-title {
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+    margin-bottom: 1rem;
+  }
+
+  .book-page-chapter.on-white .bp-page {
+    font-size: 0.94rem;
+    line-height: 1.65;
+  }
+
+  .book-page-chapter.on-white .bp-running {
+    margin-bottom: 1rem;
+  }
+}
+
 /* Reduced motion: lines settled, everything readable */
 @media (prefers-reduced-motion: reduce) {
   .bp-line-inner {
@@ -1159,6 +1181,14 @@ html:has(body.has-scroll-film) {
   text-shadow: none !important;
 }
 
+/* Quote ink on the white paper (was white-on-white = invisible) */
+.book-page-chapter.on-white .bp-quote-line,
+.book-page-chapter.on-white .bp-quote-sub,
+.book-page-chapter.on-white .bp-quote-source {
+  color: #131a12;
+  text-shadow: none;
+}
+
 /* Pull-quote support lines — completed thought, book-style */
 .bp-quote-sub {
   font-family: 'Newsreader', Georgia, serif;
@@ -1202,9 +1232,29 @@ html:has(body.has-scroll-film) {
   padding: 0 1.5rem;
 }
 
-/* White page: headline joins the book spread up top */
-.book-page-chapter.on-white .bp-title {
-  place-self: start center;
-  max-width: 62rem;
-  padding: max(10svh, 72px) 1.5rem 0;
+
+
+/* Mobile white-page compaction — keep the whole spread on screen (no crop) */
+@media (max-width: 768px) {
+  .book-page-chapter.on-white .bp-spread {
+    gap: 1.2rem;
+  }
+
+  .book-page-chapter.on-white .bp-page {
+    font-size: 0.92rem;
+    line-height: 1.68;
+  }
+
+  .book-page-chapter.on-white .bp-title {
+    font-size: clamp(1.55rem, 5.6vw, 2rem);
+    margin-bottom: 0.85rem;
+  }
+
+  .book-page-chapter.on-white .bp-running {
+    margin-bottom: 0.8rem;
+  }
+
+  .book-page-chapter.on-white {
+    padding: 0 1.1rem;
+  }
 }
