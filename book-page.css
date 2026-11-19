@@ -1179,3 +1179,32 @@ html:has(body.has-scroll-film) {
   color: rgba(255, 255, 255, 0.55);
   margin: 1.4rem 0 0;
 }
+
+/* ==========================================================================
+   FILM HEADLINES — center-aligned, typographic, no book chrome.
+   Book format (running head + two-page spread) exists ONLY on white pages.
+   ========================================================================== */
+
+/* Running head is a book element: film-only unless the white page is up */
+.book-page-chapter .bp-running {
+  display: none;
+}
+
+.book-page-chapter.on-white .bp-running {
+  display: flex;
+}
+
+/* Film headline: pure center-aligned statement over the image */
+.book-page-chapter.is-active:not(.on-white) .bp-title {
+  place-self: center;
+  text-align: center;
+  max-width: 44rem;
+  padding: 0 1.5rem;
+}
+
+/* White page: headline joins the book spread up top */
+.book-page-chapter.on-white .bp-title {
+  place-self: start center;
+  max-width: 62rem;
+  padding: max(10svh, 72px) 1.5rem 0;
+}

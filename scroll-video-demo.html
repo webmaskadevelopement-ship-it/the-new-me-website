@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Video Experience — The New Me</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Component Stylesheet -->
+  <link rel="stylesheet" href="scroll-video.css">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0b0f19;
+      color: #f8fafc;
+      font-family: 'Inter', -apple-system, sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Top Demo Bar */
+    .demo-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1.5rem;
+      background: rgba(11, 15, 25, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .demo-logo {
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .demo-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      background: rgba(34, 197, 94, 0.15);
+      color: #4ade80;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      padding: 0.2rem 0.5rem;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+
+    .demo-nav-link {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .demo-nav-link:hover {
+      color: #ffffff;
+    }
+
+    /* Demo Content Following Video */
+    .demo-content {
+      padding: 6rem 2rem;
+      max-width: 64rem;
+      margin: 0 auto;
+    }
+
+    .demo-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1.25rem;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .demo-card h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.02em;
+    }
+
+    .demo-card p {
+      color: #94a3b8;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    .demo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .grid-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+    }
+
+    .grid-item h3 {
+      font-size: 1.1rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+    }
+
+    .code-block {
+      background: #030712;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1rem 1.25rem;
+      border-radius: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Demo Header -->
+  <header class="demo-bar">
+    <a href="index.html" class="demo-logo">
+      <span>The New Me</span>
+      <span class="demo-tag">Scroll Video Ready</span>
+    </a>
+    <div style="display: flex; gap: 1.5rem; align-items: center;">
+      <a href="index.html" class="demo-nav-link">← Return to Website</a>
+      <a href="#integration-guide" class="demo-nav-link">How to Integrate</a>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       SCROLL VIDEO COMPONENT
+       Pinned 100vh Viewport Scrubbing Container
+       ========================================================================= -->
+  <section id="scroll-video-experience" class="scroll-video-section">
+    <div id="scroll-video-viewport" class="scroll-video-viewport">
+      
+      <!-- Media Viewport -->
+      <div class="scroll-video-media-wrap">
+        <!-- Canvas Layer: Smooth 60/120fps hardware-accelerated image sequence -->
+        <canvas id="scroll-video-canvas" class="scroll-video-canvas"></canvas>
+
+        <!-- HTML5 Video Layer: Native video fallback -->
+        <video id="scroll-video-native" class="scroll-video-native" src="video.mp4" playsinline muted preload="auto"></video>
+
+        <!-- Ambient Cinematic Vignette -->
+        <div class="scroll-video-vignette"></div>
+      </div>
+
+      <!-- Top HUD Telemetry -->
+      <div class="scroll-video-hud-top">
+        <div class="scroll-hud-badge">
+          <span class="dot"></span>
+          <span id="engine-label">Engine: Canvas Sequence</span>
+        </div>
+        <div class="scroll-hud-telemetry">
+          <span id="hud-frame-counter">FRAME 001 / 144</span>
+          <span>•</span>
+          <span id="hud-time-counter">0.00s</span>
+          <span>•</span>
+          <span id="hud-progress-percent">0%</span>
+        </div>
+      </div>
+
+      <!-- Narrative Stage Panels (Fade in & out across scroll quadrants) -->
+      <div class="scroll-narrative-container">
+        <div class="scroll-narrative-panel active" data-step="1">
+          <h3>Phase 01: Initiation</h3>
+          <p>Scroll down gently to scrub through high-resolution frames in real-time with zero lag.</p>
+        </div>
+        <div class="scroll-narrative-panel" data-step="2">
+          <h3>Phase 02: Molecular Extraction</h3>
+          <p>Every frame is pre-cached in memory for instant bidirectional timeline scrubbing.</p>
+        </div>
+        <div class="scroll-narrative-panel" data-step="3">
+          <h3>Phase 03: Precision Kinetics</h3>
+          <p>Seamlessly transitions across screen resolutions with automatic Retina DPR scaling.</p>
+        </div>
+        <div class="scroll-narrative-panel" data-step="4">
+          <h3>Phase 04: Arrival</h3>
+          <p>The sequence completes and seamlessly releases the viewport to the rest of your page.</p>
+        </div>
+      </div>
+
+      <!-- Bottom Interactive Scrubber & Controls -->
+      <div class="scroll-video-hud-bottom">
+        <div id="scrubber-track" class="scroll-scrubber-track" title="Click anywhere to scrub timeline">
+          <div id="scrubber-fill" class="scroll-scrubber-fill"></div>
+        </div>
+
+        <div class="scroll-controls-bar">
+          <div style="display: flex; gap: 0.5rem;">
+            <button id="autoplay-flight-btn" class="scroll-btn">▶ Fly Through</button>
+            <button id="engine-toggle-btn" class="scroll-btn">Toggle Engine</button>
+          </div>
+
+          <div class="scroll-chapters">
+            <button class="scroll-chapter-btn active" data-progress="0.0">01 Start</button>
+            <button class="scroll-chapter-btn" data-progress="0.33">02 Middle</button>
+            <button class="scroll-chapter-btn" data-progress="0.66">03 Climax</button>
+            <button class="scroll-chapter-btn" data-progress="1.0">04 End</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Below Scroll Video (Shows how page naturally resumes) -->
+  <main class="demo-content" id="integration-guide">
+    <div class="demo-card">
+      <h2>Scroll Video Ready & Cloned</h2>
+      <p>All dependencies and files required to create scroll videos have been copied and configured in this folder. You can use this exact pattern anywhere in The New Me website.</p>
+      
+      <div class="demo-grid">
+        <div class="grid-item">
+          <h3>1. GSAP Dependencies</h3>
+          <p>Self-contained in <code>vendor/gsap/gsap.min.js</code> and <code>vendor/gsap/ScrollTrigger.min.js</code>. No npm installation required.</p>
+        </div>
+        <div class="grid-item">
+          <h3>2. Script Controller</h3>
+          <p>Managed by <code>scroll-video.js</code>. Handles frame caching, resize math, scrubber jumps, and ScrollTrigger pinning.</p>
+        </div>
+        <div class="grid-item">
+          <h3>3. Dedicated Stylesheet</h3>
+          <p>Contained in <code>scroll-video.css</code>. Keeps all video styling isolated from your existing <code>style.css?v=navbar_sticky</code>.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-card">
+      <h2>How to Add to index.html</h2>
+      <p>Include the CSS in your <code>&lt;head&gt;</code>:</p>
+      <div class="code-block">&lt;link rel="stylesheet" href="scroll-video.css"&gt;</div>
+
+      <p>Place the section wherever you want the video to pin:</p>
+      <div class="code-block">&lt;section id="scroll-video-experience" class="scroll-video-section"&gt;
+  &lt;!-- (See scroll-video-demo.html for inner markup) --&gt;
+&lt;/section&gt;</div>
+
+      <p>Include the scripts before the closing <code>&lt;/body&gt;</code> tag:</p>
+      <div class="code-block">&lt;script src="vendor/gsap/gsap.min.js"&gt;&lt;/script&gt;
+&lt;script src="vendor/gsap/ScrollTrigger.min.js"&gt;&lt;/script&gt;
+&lt;script src="scroll-video.js"&gt;&lt;/script&gt;</div>
+    </div>
+  </main>
+
+  <!-- GSAP & ScrollTrigger Libraries -->
+  <script src="vendor/gsap/gsap.min.js"></script>
+  <script src="vendor/gsap/ScrollTrigger.min.js"></script>
+
+  <!-- Scroll Video Controller -->
+  <script src="scroll-video.js"></script>
+
+</body>
+</html>
