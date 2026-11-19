@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "2.0.0",
+  "projectName": "",
+  "referenceType": "image | screenshot | visual_url | moodboard",
+  "industry": "",
+  "audience": "",
+  "primaryGoal": "",
+  "scope": "homepage_only | landing_page | full_site",
+  "targetOutput": [
+    "coding_agent"
+  ],
+  "referenceInfluence": {
+    "layout": 2,
+    "typography": 2,
+    "color": 2,
+    "imagery": 2,
+    "motion": 1,
+    "components": 2
+  },
+  "designIntent": {
+    "primary": "",
+    "secondary": [],
+    "userFeeling": [],
+    "brandPerception": []
+  },
+  "existingBrandInputs": [],
+  "techStack": {
+    "framework": "",
+    "styling": "",
+    "componentLibrary": "",
+    "deployment": ""
+  },
+  "notes": ""
+}

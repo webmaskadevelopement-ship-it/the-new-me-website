@@ -1,0 +1,16 @@
+{
+  "principles": [
+    "Define content purpose and constraints without inventing factual claims."
+  ],
+  "contentBlocks": [
+    {
+      "id": "",
+      "type": "headline | body | eyebrow | CTA | testimonial | stat | caption | label | other",
+      "purpose": "",
+      "tone": "",
+      "lengthConstraint": "",
+      "requiredFacts": [],
+      "source": "user | verified_source | placeholder"
+    }
+  ]
+}

@@ -1,0 +1,318 @@
+/* =========================================================================
+   GSAP SCROLL VIDEO COMPONENT
+   Precision Canvas & HTML5 Video Scrubbing Engine with ScrollTrigger Pinning
+   ========================================================================= */
+
+:root {
+  --sv-bg: #000000;
+  --sv-accent: #22c55e;
+  --sv-accent-glow: rgba(34, 197, 94, 0.25);
+  --sv-text: #f8fafc;
+  --sv-text-muted: #94a3b8;
+  --sv-glass-bg: rgba(15, 23, 42, 0.75);
+  --sv-glass-border: rgba(255, 255, 255, 0.12);
+  --sv-track-bg: rgba(255, 255, 255, 0.15);
+  --sv-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* 1. Main Experience Section */
+.scroll-video-section {
+  position: relative;
+  width: 100%;
+  background-color: var(--sv-bg);
+  color: var(--sv-text);
+  overflow: visible;
+}
+
+/* 2. Pinned Viewport Container */
+.scroll-video-viewport {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--sv-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 3. Media Layers (Canvas & Video) */
+.scroll-video-media-wrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-video-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.scroll-video-native {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+/* Subtle Cinematic Vignette */
+.scroll-video-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 45%, rgba(0, 0, 0, 0.8) 100%);
+  z-index: 2;
+}
+
+/* 4. Top Telemetry HUD */
+.scroll-video-hud-top {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.scroll-hud-badge {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--sv-glass-bg);
+  border: 1px solid var(--sv-glass-border);
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--sv-font-mono);
+  font-size: 0.75rem;
+  color: var(--sv-text-muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.scroll-hud-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--sv-accent);
+  box-shadow: 0 0 8px var(--sv-accent-glow);
+}
+
+.scroll-hud-telemetry {
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.85rem;
+  background: var(--sv-glass-bg);
+  border: 1px solid var(--sv-glass-border);
+  border-radius: 9999px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--sv-font-mono);
+  font-size: 0.75rem;
+  color: var(--sv-text);
+}
+
+/* 5. Bottom Interactive Scrubber & Controls */
+.scroll-video-hud-bottom {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 3rem);
+  max-width: 52rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  z-index: 10;
+  pointer-events: auto;
+}
+
+.scroll-scrubber-track {
+  width: 100%;
+  height: 8px;
+  background: var(--sv-track-bg);
+  border-radius: 9999px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  transition: height 0.2s ease, background 0.2s ease;
+}
+
+.scroll-scrubber-track:hover {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.scroll-scrubber-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3b82f6, var(--sv-accent));
+  border-radius: 9999px;
+  box-shadow: 0 0 12px var(--sv-accent-glow);
+  pointer-events: none;
+  transition: width 0.05s linear;
+}
+
+.scroll-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.scroll-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  background: var(--sv-glass-bg);
+  border: 1px solid var(--sv-glass-border);
+  color: var(--sv-text);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.scroll-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-1px);
+}
+
+.scroll-btn:active {
+  transform: translateY(1px);
+}
+
+/* Chapter Waypoints */
+.scroll-chapters {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scroll-chapter-btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--sv-text-muted);
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.scroll-chapter-btn:hover {
+  color: var(--sv-text);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.scroll-chapter-btn.active {
+  color: var(--sv-text);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+
+/* 6. Narrative Overlay Cards / Steps */
+.scroll-narrative-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.scroll-narrative-panel {
+  position: absolute;
+  max-width: 32rem;
+  padding: 2rem 2.5rem;
+  background: rgba(10, 15, 20, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(24px) scale(0.96);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.scroll-narrative-panel.active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.scroll-narrative-panel h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.scroll-narrative-panel p {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--sv-text-muted);
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .scroll-video-hud-top {
+    top: 1rem;
+    left: 1rem;
+    right: 1rem;
+  }
+  .scroll-video-hud-bottom {
+    bottom: 1rem;
+    width: calc(100% - 2rem);
+  }
+  .scroll-chapters {
+    display: none;
+  }
+  .scroll-narrative-panel {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+}

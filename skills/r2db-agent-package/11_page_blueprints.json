@@ -1,0 +1,15 @@
+{
+  "pages": [
+    {
+      "id": "home",
+      "name": "Homepage",
+      "purpose": "",
+      "sections": [],
+      "contentIntent": {},
+      "ctaHierarchy": [],
+      "responsiveSummary": {},
+      "seoSummary": {}
+    }
+  ],
+  "templateReuse": []
+}

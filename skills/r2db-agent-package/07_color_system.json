@@ -1,0 +1,24 @@
+{
+  "colors": {
+    "primary": {},
+    "secondary": {},
+    "accent": {},
+    "background": {},
+    "surface": {},
+    "textPrimary": {},
+    "textSecondary": {},
+    "textInverse": {},
+    "border": {},
+    "divider": {},
+    "success": {},
+    "warning": {},
+    "error": {},
+    "info": {},
+    "overlay": {},
+    "gradients": [],
+    "lightTheme": {},
+    "darkTheme": {}
+  },
+  "usageRatios": {},
+  "contrastChecksRequired": true
+}

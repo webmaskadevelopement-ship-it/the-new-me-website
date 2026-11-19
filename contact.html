@@ -592,15 +592,6 @@
             .contact-faq-section { padding: 60px 16px 72px; }
         }
     </style>
-<link rel="canonical" href="https://thenewme.com/contact.html">
-<meta property="og:site_name" content="The New Me">
-<meta property="og:title" content="Contact Us | The New Me">
-<meta property="og:description" content="Reach out to The New Me team for inquiries, book orders, press requests, and guidance on whole plant-based nutrition and wellness.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://thenewme.com/contact.html">
-<meta property="og:image" content="https://thenewme.com/DATA/NAV BAR/heart logo.webp">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Contact Us | The New Me">
 </head>
 <body>
     
@@ -608,8 +599,8 @@
         <header class="header">
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="The New Me Home">
-                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/heart logo.webp" alt="Heart Logo" class="logo-heart" loading="lazy" width="621" height="621">
-                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/Logo top text.webp" alt="the new me" class="logo-text-img" loading="lazy" width="855" height="180">
+                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/heart logo.webp" alt="Heart Logo" class="logo-heart">
+                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/Logo top text.webp" alt="the new me" class="logo-text-img">
             </a>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link">Home</a>
@@ -752,7 +743,11 @@
                     Select a topic below so we can route your message to the appropriate specialist.
                 </p>
 
-                <form id="contactForm">
+                <form id="contactForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+                    <input type="hidden" name="form-name" value="contact">
+                    <p class="netlify-hp" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden" aria-hidden="true">
+                        <label>Leave this field empty: <input name="bot-field"></label>
+                    </p>
                     <input type="hidden" id="selectedTopic" name="topic" value="General Query">
                     
                     <div id="contactFormFields">
@@ -920,7 +915,7 @@
         <div class="container footer-grid">
             <div class="footer-col footer-col-brand">
                 <div class="footer-logo">
-                    <img loading="lazy" src="DATA/NAV BAR/Logo top text.webp" alt="the new me" class="footer-logo-img" width="855" height="180">
+                    <img loading="lazy" src="DATA/NAV BAR/Logo top text.webp" alt="the new me" class="footer-logo-img">
                     <span class="logo-subtext">EAT • FOCUS • REBUILD • LIVE</span>
                 </div>
                 <div class="social-links">
@@ -999,32 +994,25 @@
             const contactFields = document.getElementById('contactFormFields');
             const contactSuccess = document.getElementById('contactSuccessBanner');
 
-                        if (contactForm) {
-                // Netlify Forms AJAX submission (silent, keeps same UI)
-                const botField = contactForm.querySelector('[name="bot-field"]');
+            if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
-                    if (botField && botField.value) return; // honeypot triggered
-                    const formData = new FormData(contactForm);
-                    formData.append('form-name', 'contact');
-                    fetch('/', { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } })
-                        .then(function () {
-                            if (contactFields && contactSuccess) {
-                                contactFields.style.display = 'none';
-                                contactSuccess.style.display = 'block';
-                                contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-                        })
-                        .catch(function () {
-                            if (contactFields && contactSuccess) {
-                                contactFields.style.display = 'none';
-                                contactSuccess.style.display = 'block';
-                                contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            }
-                        });
+                    var bot = contactForm.querySelector('[name="bot-field"]');
+                    if (bot && bot.value) return; // honeypot: silently ignore
+                    var fd = new FormData(contactForm);
+                    fd.append('form-name', 'contact');
+                    fetch('/', { method: 'POST', body: fd, headers: { Accept: 'application/json' } })
+                        .then(function() { showSuccess(); })
+                        .catch(function() { showSuccess(); });
                 });
+                function showSuccess() {
+                    if (contactFields && contactSuccess) {
+                        contactFields.style.display = 'none';
+                        contactSuccess.style.display = 'block';
+                        contactSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
             }
-
 
             // FAQ Accordion toggle
             const faqButtons = document.querySelectorAll('.faq-question-btn');

@@ -1,0 +1,10 @@
+{
+  "principles": [
+    "Describe behavior before exact breakpoint values.",
+    "Prefer fluid typography and spacing where appropriate.",
+    "Document every major structural transformation.",
+    "Do not invent mobile behavior when no evidence exists; label it recommended."
+  ],
+  "rules": [],
+  "transformationMatrix": []
+}

@@ -1,0 +1,373 @@
+/* =========================================================================
+   BOOK FILM v2 — scroll-scrubbed book experience (Home page)
+   A pure typographic system: white book type set directly on the film.
+   No panels, cards, borders, rules, pills, bars or vignettes — the frame
+   is the page. Layers on scroll-video.css; page-scoped to index.html.
+   ========================================================================= */
+
+.book-film-section {
+  position: relative;
+  background: #050807;
+  color: #f8fafc;
+}
+
+/* Prevent trackpad/wheel overscroll bounce from shifting the pinned film at
+   the page bottom (a real-device source of OUT-seam jank). */
+body.has-scroll-film {
+  overscroll-behavior-y: none;
+}
+
+/* --------------------------------------------------------------------------
+   FadeContent "mist" reveal (react-bits port) — slow, light fade + rise.
+   Applied via JS to the hero copy; child elements stagger in sequence.
+   -------------------------------------------------------------------------- */
+.fx-mist {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fx-mist-in 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.fx-mist-d1 { animation-delay: 0.12s; }
+.fx-mist-d2 { animation-delay: 0.24s; }
+.fx-mist-d3 { animation-delay: 0.36s; }
+.fx-mist-d4 { animation-delay: 0.48s; }
+
+@keyframes fx-mist-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-mist {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Layer order inside the pinned viewport (poster below canvas, type above) */
+.book-film-viewport .book-film-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.book-film-viewport .scroll-video-canvas {
+  z-index: 2;
+}
+
+.book-film-poster {
+  transition: opacity 0.6s ease;
+}
+
+.book-film-poster.is-hidden {
+  opacity: 0;
+}
+
+/* Hero expand phase (protein ScrollExpand pattern): while the reader scrolls
+   into the pin, the film is zoomed and the stage opens; a dark scrim fades
+   out as the zoom settles, then the white bloom hands off to the scrub.
+   Scrim opacity is driven by JS (expand progress); only transition-free. */
+.book-film-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.06) 48%,
+    rgba(0, 0, 0, 0.32) 100%
+  );
+}
+
+/* --------------------------------------------------------------------------
+   Mystical white bloom — a soft, pure-light pulse over every shot join.
+   Pure light: no shape, no box, no border — a radial glow blended screen-
+   style over the film, fading with the frame transition.
+   -------------------------------------------------------------------------- */
+.book-film-bloom {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    ellipse 62% 52% at 50% 46%,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(255, 255, 255, 0.34) 38%,
+    rgba(255, 255, 255, 0) 72%
+  );
+  mix-blend-mode: screen;
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.book-film-bloom.is-blooming {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Chapter typography — the book itself.
+   Stacked full-frame chapters; one breathes in as its scene settles and
+   lifts away before each white bloom so every transition is pure light.
+   -------------------------------------------------------------------------- */
+.book-chapters {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+/* Two-speed motion: entering a segment breathes in gracefully (0.65s);
+   leaving is quick and tidy (0.35s) so text never lags behind fast scrub.
+   Opacity + transform only — no blur (compositing-heavy, causes shimmer). */
+.book-chapter {
+  grid-area: 1 / 1;
+  max-width: 36rem;
+  /* Chapters sit in the calmer upper band of the frame (mist/sky), away
+     from the glowing subjects these films keep dead-center. */
+  place-self: start center;
+  padding: max(12svh, 96px) 1.75rem 0;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(18px) scale(0.995);
+  transition:
+    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+/* The epilogue frame is a calm wide landscape — center holds beautifully. */
+.book-chapter[data-chapter='epilogue'] {
+  place-self: center;
+  padding: 0 1.75rem 7svh;
+}
+
+.book-chapter.is-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition-duration: 0.65s;
+}
+
+/* Staggered type (AnimatedContent-style): on entering a segment the
+   eyebrow, title, copy and CTA rise in sequence; on exit they leave
+   together (no delay) so fast scrubbing never lags. */
+.book-chapter-eyebrow,
+.book-chapter-title,
+.book-chapter-copy,
+.book-chapter-cta {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.book-chapter.is-active .book-chapter-eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.06s;
+}
+
+.book-chapter.is-active .book-chapter-title {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.16s;
+}
+
+.book-chapter.is-active .book-chapter-copy {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.26s;
+}
+
+.book-chapter.is-active .book-chapter-cta {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.36s;
+}
+
+.book-chapter-eyebrow {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0 0 1.15rem;
+  text-shadow:
+    0 1px 2px rgba(3, 10, 6, 0.6),
+    0 2px 30px rgba(3, 10, 6, 0.9);
+}
+
+.book-chapter-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin: 0 0 1.25rem;
+  text-shadow:
+    0 4px 72px rgba(3, 10, 6, 0.8),
+    0 2px 4px rgba(3, 10, 6, 0.5);
+}
+
+.book-chapter-copy {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: clamp(1.04rem, 1.25vw, 1.16rem);
+  font-weight: 400;
+  line-height: 1.85;
+  color: rgba(255, 255, 255, 0.96);
+  max-width: 34rem;
+  margin: 0 auto;
+  text-shadow:
+    0 1px 2px rgba(3, 10, 6, 0.55),
+    0 2px 34px rgba(3, 10, 6, 0.9);
+}
+
+/* The single component on the page: the site's own primary button,
+   revealed only with the epilogue. */
+.book-chapter-cta {
+  margin-top: 1.6rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.6s ease 0.25s,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+}
+
+.book-chapter.is-active .book-chapter-cta {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.book-chapter-cta:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 4px;
+}
+
+/* Keyboard escape hatch from the pinned scrub region (invisible until focus) */
+.skip-film-link {
+  position: absolute;
+  top: 88px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 7;
+  padding: 0.6rem 1.2rem;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  color: #f8fafc;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.skip-film-link:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid #86efac;
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion: no pin, no scrub. Poster as a still; chapters set as a
+   clean typographic page in reading order.
+   -------------------------------------------------------------------------- */
+.book-film-section.reduced-motion .book-film-viewport {
+  height: auto;
+  min-height: 0;
+  display: block;
+  position: relative;
+}
+
+.book-film-section.reduced-motion .book-film-poster {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  opacity: 1;
+}
+
+.book-film-section.reduced-motion .scroll-video-canvas,
+.book-film-section.reduced-motion .skip-film-link {
+  display: none;
+}
+
+.book-film-section.reduced-motion .book-chapters {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.25rem;
+  padding: 3.5rem 1.5rem 4rem;
+  pointer-events: auto;
+}
+
+.book-film-section.reduced-motion .book-chapter {
+  position: static;
+  opacity: 1;
+  transform: none;
+  filter: none;
+  pointer-events: auto;
+}
+
+.book-film-section.reduced-motion .book-chapter-eyebrow,
+.book-film-section.reduced-motion .book-chapter-title,
+.book-film-section.reduced-motion .book-chapter-copy,
+.book-film-section.reduced-motion .book-chapter-cta {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.book-film-section.reduced-motion .book-chapter-cta {
+  pointer-events: auto;
+  opacity: 1;
+  transform: none;
+}
+
+/* Mobile tuning */
+@media (max-width: 768px) {
+  .book-chapter {
+    padding: max(11svh, 84px) 1.25rem 0;
+  }
+
+  .book-chapter[data-chapter='epilogue'] {
+    padding: 0 1.25rem 3svh;
+  }
+
+  .book-chapter-title {
+    font-size: clamp(1.7rem, 7.4vw, 2.3rem);
+  }
+
+  .book-chapter-copy {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+}
+
+/* Same ScrollTrigger restore guard as book-page.css (see note there). */
+html:has(body.has-scroll-film) {
+  scroll-behavior: auto !important;
+}

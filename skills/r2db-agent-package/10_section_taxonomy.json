@@ -1,0 +1,50 @@
+{
+  "classificationRules": {
+    "present": "Directly evidenced in reference.",
+    "absent": "Evidence suggests it is not present.",
+    "optional": "Could fit the target but is not required by evidence.",
+    "recommended": "Recommended for target goals; must be justified.",
+    "unsupported": "Insufficient evidence; do not add without user input."
+  },
+  "detectedSections": [],
+  "sectionLibrary": {
+    "global": [
+      "announcement_bar",
+      "header",
+      "mobile_navigation",
+      "footer",
+      "cookie_consent",
+      "skip_links",
+      "floating_cta",
+      "scroll_progress",
+      "notification"
+    ],
+    "homepage": [
+      "hero",
+      "brand_statement",
+      "value_proposition",
+      "showcase",
+      "benefits",
+      "features",
+      "how_it_works",
+      "methodology",
+      "transformation",
+      "founder_story",
+      "philosophy",
+      "social_proof",
+      "content",
+      "newsletter",
+      "faq",
+      "final_cta"
+    ],
+    "innerPages": [
+      "about",
+      "product_service",
+      "methodology_program",
+      "blog_insights",
+      "contact",
+      "ecommerce",
+      "utility"
+    ]
+  }
+}

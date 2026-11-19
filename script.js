@@ -320,5 +320,95 @@
     initScrollAnimations();
   }
 
+  // --- Mobile story slider: JS-dragged track -------------------------------
+  // The strip must NOT be a native overflow-x scroller. Horizontal native
+  // scrollers axis-lock fast vertical flicks that start on them, so a phone
+  // user swiping up with a finger over this strip would see the page stop
+  // scrolling ("dead" swipe). Instead: the container clips, `touch-action:
+  // pan-y` (set in CSS) hands vertical pans straight to the page, and
+  // horizontal pans drag a translated inner track.
+  function initStorySliderDrag() {
+    const slider = document.querySelector('.story-slider-mobile');
+    if (!slider || slider.dataset.dragInit) return;
+    slider.dataset.dragInit = '1';
+    if (typeof slider.setPointerCapture !== 'function') return;
+
+    // Wrap the existing thumbs in a movable track (no markup change needed).
+    const track = document.createElement('div');
+    track.className = 'story-slider-track';
+    while (slider.firstChild) track.appendChild(slider.firstChild);
+    slider.appendChild(track);
+
+    let startX = 0;
+    let startOffset = 0;
+    let offset = 0;
+    let maxOffset = 0;
+    let step = 1;
+    let dragging = false;
+    let moved = 0;
+
+    const clamp = (v) => Math.max(0, Math.min(maxOffset, v));
+    const apply = () => { track.style.transform = `translateX(${-offset}px)`; };
+
+    function measure() {
+      maxOffset = Math.max(0, track.scrollWidth - slider.clientWidth);
+      const cards = track.children;
+      if (cards.length >= 2) {
+        step = cards[1].getBoundingClientRect().left - cards[0].getBoundingClientRect().left;
+      } else if (cards.length === 1) {
+        step = cards[0].getBoundingClientRect().width;
+      }
+      offset = clamp(offset);
+      apply();
+    }
+    measure();
+    window.addEventListener('resize', measure, { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);
+
+    slider.addEventListener('pointerdown', (e) => {
+      if (e.pointerType === 'mouse') return; // desktop pointers keep native behavior
+      dragging = true;
+      moved = 0;
+      startX = e.clientX;
+      startOffset = offset;
+      track.classList.remove('is-settling');
+      try { slider.setPointerCapture(e.pointerId); } catch (err) { /* released anyway */ }
+    });
+
+    slider.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(dx));
+      offset = clamp(startOffset - dx);
+      apply();
+    });
+
+    function release() {
+      if (!dragging) return;
+      dragging = false;
+      // Settle onto the nearest card edge (replaces the old scroll-snap feel).
+      const idx = Math.round(offset / Math.max(1, step));
+      offset = clamp(idx * step);
+      track.classList.add('is-settling');
+      apply();
+    }
+    slider.addEventListener('pointerup', release);
+    slider.addEventListener('pointercancel', release);
+
+    // A drag is not a tap: swallow the video-modal click after real movement.
+    slider.addEventListener('click', (e) => {
+      if (moved > 8) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initStorySliderDrag);
+  } else {
+    initStorySliderDrag();
+  }
+
 })();
 

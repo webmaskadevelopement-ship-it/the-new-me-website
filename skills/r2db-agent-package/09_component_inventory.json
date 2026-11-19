@@ -1,0 +1,20 @@
+{
+  "detectedComponents": [
+    {
+      "id": "component-01",
+      "name": "",
+      "anatomy": [],
+      "variants": [],
+      "states": [],
+      "props": {},
+      "tokens": {},
+      "responsive": {},
+      "accessibility": {},
+      "evidenceRefs": [],
+      "confidence": 0.0
+    }
+  ],
+  "recommendedComponents": [],
+  "componentHierarchy": [],
+  "componentLibraryReference": "Use the section/component taxonomy as a library, not a checklist to populate automatically."
+}

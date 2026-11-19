@@ -1,0 +1,66 @@
+{
+  "version": 2,
+  "generated": "2026-11-18 13:29:14",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "quality": 87,
+  "totalFrames": 359,
+  "chapters": {
+    "prologue": {
+      "start": 0,
+      "end": 57,
+      "segment": "S1"
+    },
+    "chapter-1": {
+      "start": 82,
+      "end": 139,
+      "segment": "S2"
+    },
+    "chapter-2": {
+      "start": 164,
+      "end": 211,
+      "segment": "S3"
+    },
+    "chapter-3": {
+      "start": 236,
+      "end": 288,
+      "segment": "S4"
+    },
+    "epilogue": {
+      "start": 313,
+      "end": 358,
+      "segment": "S5"
+    }
+  },
+  "bloomWindows": [
+    {
+      "start": 58,
+      "end": 81,
+      "from": "prologue",
+      "to": "chapter-1"
+    },
+    {
+      "start": 140,
+      "end": 163,
+      "from": "chapter-1",
+      "to": "chapter-2"
+    },
+    {
+      "start": 212,
+      "end": 235,
+      "from": "chapter-2",
+      "to": "chapter-3"
+    },
+    {
+      "start": 289,
+      "end": 312,
+      "from": "chapter-3",
+      "to": "epilogue"
+    }
+  ],
+  "sources": {
+    "gemini": "ElevenLabs_video_gemini-omni-flash-1-1_Create a 10-sec_2026-11-06T16_54_02.mp4",
+    "seedance": "ElevenLabs_video_seedance-2-5_Create a 10-sec_2026-11-06T16_51_12.mp4"
+  }
+}

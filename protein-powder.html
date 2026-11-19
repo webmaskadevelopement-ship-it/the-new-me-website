@@ -20,12 +20,21 @@
     
     <!-- Core & Component Stylesheets -->
     <link rel="stylesheet" href="style.css?v=navbar_sticky">
-    <link rel="stylesheet" href="vendor/tailwind.prod.css">
     <link rel="stylesheet" href="protein-scroll.css?v=unified_section_v1">
 
     <!-- Tailwind Engine & Custom Product Tokens -->
-    
-    
+    <script>
+        // Silence Tailwind Play CDN development advisory in browser console
+        (function() {
+            const _origWarn = console.warn;
+            console.warn = function(...args) {
+                if (typeof args[0] === 'string' && args[0].includes('cdn.tailwindcss.com')) return;
+                _origWarn.apply(console, args);
+            };
+        })();
+    </script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "primary": "#2a4b2c", "primary-hover": "#1f3721", "primary-light": "#eef6f0", "primary-soft": "rgba(42, 75, 44, 0.08)", "brand-green": "#2a4b2c", "brand-dark": "#1a1a1a", "brand-muted": "#555555", "brand-subtle": "#767676", "brand-border": "#e0e0e0", "brand-border-subtle": "rgba(0, 0, 0, 0.07)", "brand-bg": "#ffffff", "brand-offwhite": "#f8f7f2", "bg-white": "#ffffff", "bg-off-white": "#f8f7f2", "surface": "#ffffff", "surface-offwhite": "#f8f7f2", "surface-variant": "#eef6f0", "text-primary": "#1a1a1a", "text-secondary": "#555555" }, "fontFamily": { "serif": ["Playfair Display", "Georgia", "serif"], "sans": ["Inter", "Plus Jakarta Sans", "sans-serif"], "heading": ["Playfair Display", "serif"], "body": ["Inter", "sans-serif"] } } } };</script>
 
     <!-- Component Custom Styles -->
     <style>
@@ -773,27 +782,6 @@ body, p, span, button, input, table, nav, .font-sans-body {
   }
 }
     </style>
-<link rel="canonical" href="https://thenewme.com/protein-powder.html">
-<meta property="og:site_name" content="The New Me">
-<meta property="og:title" content="Protein Powder | The New Me">
-<meta property="og:description" content="Experience The New Me plant-based protein powder: complete tri-blend, prebiotic fibre, active B12, and zero bloat.">
-<meta property="og:type" content="product">
-<meta property="og:url" content="https://thenewme.com/protein-powder.html">
-<meta property="og:image" content="https://thenewme.com/DATA/The New Me Heart Logo.webp">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Protein Powder | The New Me">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Product",
-  "name": "The New Me Plant Protein Powder",
-  "image": "https://thenewme.com/images/hero-packshot.webp",
-  "description": "Complete plant-based protein: tri-blend, prebiotic fibre, active B12, zero bloat.",
-  "brand": { "@type": "Brand", "name": "The New Me" },
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "INR", "availability": "https://schema.org/PreOrder" }
-}
-</script>
 </head>
 <body class="bg-white font-sans text-brand-dark antialiased relative overflow-x-clip protein-page">
     <!-- 00. REACT BITS FLUID GLASS FILL LOADER (Water Glass Rising Fluid & Bloom Dissolve) -->
@@ -826,8 +814,8 @@ body, p, span, button, input, table, nav, .font-sans-body {
     <header class="header">
         <div class="container header-inner">
             <a href="index.html" class="logo" aria-label="The New Me Home">
-                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/heart logo.webp" alt="Heart Logo" class="logo-heart" loading="lazy" width="621" height="621">
-                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/Logo top text.webp" alt="the new me" class="logo-text-img" loading="lazy" width="855" height="180">
+                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/heart logo.webp" alt="Heart Logo" class="logo-heart">
+                <img fetchpriority="high" decoding="sync" src="DATA/NAV BAR/Logo top text.webp" alt="the new me" class="logo-text-img">
             </a>
             <nav class="main-nav">
                 <a href="index.html" class="nav-link">Home</a>
@@ -888,7 +876,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
             <!-- 00. PACKSHOT REVEAL LAYER — phase 0 of the unified pin (Desktop 16:9 only) -->
             <div class="se-stage" id="proteinScrollExpandLayer" aria-label="Product reveal">
                 <div class="se-frame">
-                    <img class="se-media" src="images/hero-packshot.webp" alt="The New Me Plant Protein — floating island packshot" draggable="false" / loading="lazy" width="2560" height="1429">
+                    <img class="se-media" src="images/hero-packshot.jpg" alt="The New Me Plant Protein — floating island packshot" draggable="false" />
                     <div class="se-scrim"></div>
                     <div class="se-overlay">
                         <p class="se-overlay-title">Plant Protein</p>
@@ -1242,7 +1230,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
 
                         <!-- Image Display with Architectural Gallery Frame (16:9 Full Product View) -->
                         <div class="relative my-4 rounded-2xl overflow-hidden border border-[#e0e0e0] bg-[#f8f7f2] aspect-[16/9] w-full flex items-center justify-center z-10 shadow-sm group-hover:shadow-md transition-shadow">
-                            <img src="images/Plant_protein_pouch_on_plinth_16x9.webp" alt="THE NEW ME Plant Protein Powder 500g Pouch on Travertine Plinth - Full Product View" class="w-full h-full object-cover object-center transform scale-[1.06] group-hover:scale-[1.09] transition-transform duration-700 ease-out" loading="lazy" decoding="async" width="2752" height="1536">
+                            <img src="images/Plant_protein_pouch_on_plinth_16x9.webp" alt="THE NEW ME Plant Protein Powder 500g Pouch on Travertine Plinth - Full Product View" class="w-full h-full object-cover object-center transform scale-[1.06] group-hover:scale-[1.09] transition-transform duration-700 ease-out" loading="lazy" decoding="async">
                             <div class="absolute bottom-4 left-4 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[11px] font-bold text-[#1a1a1a] border border-black/10 shadow-xs whitespace-nowrap shrink-0">
                                 Fresh Harvest Batch
                             </div>
@@ -1367,7 +1355,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                         <!-- Origin Plate 1 -->
                         <div class="editorial-card p-6 flex flex-col sm:flex-row items-center gap-6 group bg-white">
                             <div class="origin-thumb w-full sm:w-44 h-auto sm:h-36 aspect-[16/10] sm:aspect-auto rounded-2xl overflow-hidden shrink-0 border border-[#e0e0e0]">
-                                <img src="images/australian_farm.webp" alt="Australian Golden Pea Farms" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="1200" height="896">
+                                <img src="images/australian_farm.webp" alt="Australian Golden Pea Farms" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div>
                                 <span class="text-[11px] uppercase tracking-widest text-[#2a4b2c] font-bold">Soil Cultivation</span>
@@ -1379,7 +1367,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                         <!-- Origin Plate 2 -->
                         <div class="editorial-card p-6 flex flex-col sm:flex-row items-center gap-6 group bg-white">
                             <div class="origin-thumb w-full sm:w-44 h-auto sm:h-36 aspect-[16/10] sm:aspect-auto rounded-2xl overflow-hidden shrink-0 border border-[#e0e0e0]">
-                                <img src="images/botanical_powder_lab.webp" alt="Botanical Low Temperature Milling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="1200" height="896">
+                                <img src="images/botanical_powder_lab.webp" alt="Botanical Low Temperature Milling" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div>
                                 <span class="text-[11px] uppercase tracking-widest text-[#2a4b2c] font-bold">Clean Extraction</span>
@@ -1391,7 +1379,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                         <!-- Origin Plate 3 -->
                         <div class="editorial-card p-6 flex flex-col sm:flex-row items-center gap-6 group bg-white">
                             <div class="origin-thumb w-full sm:w-44 h-auto sm:h-36 aspect-[16/10] sm:aspect-auto rounded-2xl overflow-hidden shrink-0 border border-[#e0e0e0]">
-                                <img src="images/Black_pouch_on_mirror_pool_2K_20261014222500.webp" alt="Botanical Blend Crafted for Indian Wellness" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="2752" height="1536">
+                                <img src="images/Black_pouch_on_mirror_pool_2K_20261014222500.webp" alt="Botanical Blend Crafted for Indian Wellness" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             </div>
                             <div>
                                 <span class="text-[11px] uppercase tracking-widest text-[#2a4b2c] font-bold">Precision Formulation</span>
@@ -1421,7 +1409,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                     <!-- Botanical 1: Golden Pea -->
                     <div class="ingredient-card editorial-card overflow-hidden flex flex-col group cursor-pointer bg-white" onclick="toggleIngredientDetail('pea-detail')">
                         <div class="h-52 overflow-hidden relative">
-                            <img src="images/pea_protein.webp" alt="Golden Pea Protein" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="1200" height="896">
+                            <img src="images/pea_protein.webp" alt="Golden Pea Protein" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#1a1a1a] text-[11px] font-bold shadow-sm border border-black/10 inline-flex items-center gap-1.5 transition-all group-hover:bg-white group-hover:shadow-md whitespace-nowrap shrink-0">
                                 <span>Clinical Detail</span>
                                 <svg class="w-3.5 h-3.5 text-[#2a4b2c] ingredient-chevron transition-transform duration-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1443,7 +1431,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                     <!-- Botanical 2: Sprouted Brown Rice -->
                     <div class="ingredient-card editorial-card overflow-hidden flex flex-col group cursor-pointer bg-white" onclick="toggleIngredientDetail('rice-detail')">
                         <div class="h-52 overflow-hidden relative">
-                            <img src="images/brown_rice.webp" alt="Sprouted Brown Rice Protein" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="1200" height="896">
+                            <img src="images/brown_rice.webp" alt="Sprouted Brown Rice Protein" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#1a1a1a] text-[11px] font-bold shadow-sm border border-black/10 inline-flex items-center gap-1.5 transition-all group-hover:bg-white group-hover:shadow-md whitespace-nowrap shrink-0">
                                 <span>Clinical Detail</span>
                                 <svg class="w-3.5 h-3.5 text-[#2a4b2c] ingredient-chevron transition-transform duration-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1465,7 +1453,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                     <!-- Botanical 3: Pumpkin Seeds -->
                     <div class="ingredient-card editorial-card overflow-hidden flex flex-col group cursor-pointer bg-white" onclick="toggleIngredientDetail('pumpkin-detail')">
                         <div class="h-52 overflow-hidden relative">
-                            <img src="images/pumpkin_seeds.webp" alt="Pumpkin Seed Protein" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="1200" height="896">
+                            <img src="images/pumpkin_seeds.webp" alt="Pumpkin Seed Protein" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#1a1a1a] text-[11px] font-bold shadow-sm border border-black/10 inline-flex items-center gap-1.5 transition-all group-hover:bg-white group-hover:shadow-md whitespace-nowrap shrink-0">
                                 <span>Clinical Detail</span>
                                 <svg class="w-3.5 h-3.5 text-[#2a4b2c] ingredient-chevron transition-transform duration-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1487,7 +1475,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                     <!-- Botanical 4: Chicory Inulin -->
                     <div class="ingredient-card editorial-card overflow-hidden flex flex-col group cursor-pointer bg-white" onclick="toggleIngredientDetail('fibre-detail')">
                         <div class="h-52 overflow-hidden relative">
-                            <img src="images/chicory_inulin.webp" alt="Chicory Root Inulin Prebiotic" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" width="1200" height="896">
+                            <img src="images/chicory_inulin.webp" alt="Chicory Root Inulin Prebiotic" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             <span class="absolute bottom-3 left-3 px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[#1a1a1a] text-[11px] font-bold shadow-sm border border-black/10 inline-flex items-center gap-1.5 transition-all group-hover:bg-white group-hover:shadow-md whitespace-nowrap shrink-0">
                                 <span>Clinical Detail</span>
                                 <svg class="w-3.5 h-3.5 text-[#2a4b2c] ingredient-chevron transition-transform duration-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
@@ -1642,7 +1630,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                     <!-- Left: Culinary Visual Card (6 cols) -->
                     <div class="lg:col-span-6 relative">
                         <div class="editorial-card overflow-hidden group relative h-[420px] sm:h-[500px] bg-white">
-                            <img src="images/shake_glass.webp" alt="Silky Vanilla Fudge Protein Shake" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy" width="1200" height="896">
+                            <img src="images/shake_glass.webp" alt="Silky Vanilla Fudge Protein Shake" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                             <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 via-40% to-transparent flex flex-col justify-end p-7 sm:p-10 text-white">
                                 <span class="text-xs uppercase tracking-widest text-emerald-300 font-bold mb-1.5 drop-shadow-sm">Culinary Grade</span>
                                 <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white !text-white drop-shadow-md" style="color: #ffffff !important;">Zero Grittiness. Pure Creaminess.</h3>
@@ -2080,7 +2068,7 @@ body, p, span, button, input, table, nav, .font-sans-body {
                     <!-- Left: Pristine Product Plinth Showcase (Zero Crop, 100% Uncut Artwork) -->
                     <div class="w-full lg:w-1/2 flex flex-col items-center">
                         <div class="product-showcase-box w-full max-w-[340px] sm:max-w-md aspect-[4/5] rounded-2xl overflow-hidden border border-[#e0e0e0] bg-[#fdfbf7] shadow-xs">
-                            <img src="images/Plant_protein_pouch_on_plinth_clean.webp" alt="THE NEW ME Reserve Plant Protein Pouch on Travertine Plinth" class="w-full h-full object-cover object-center" loading="lazy" width="1536" height="1870">
+                            <img src="images/Plant_protein_pouch_on_plinth_clean.webp" alt="THE NEW ME Reserve Plant Protein Pouch on Travertine Plinth" class="w-full h-full object-cover object-center">
                         </div>
                         <!-- Sleek Minimal Trust Bar (Fluid Responsive Grid: 100% Anti-Snap) -->
                         <div class="grid grid-cols-3 gap-2 w-full max-w-[340px] mt-4 pt-1 text-[11px] sm:text-xs text-[#555555] font-medium">

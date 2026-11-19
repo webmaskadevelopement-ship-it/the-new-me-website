@@ -1,0 +1,26 @@
+{
+  "fonts": {
+    "display": {
+      "candidate": "",
+      "fallback": "",
+      "confidence": 0.0,
+      "truthLevel": "inferred"
+    },
+    "body": {
+      "candidate": "",
+      "fallback": "",
+      "confidence": 0.0,
+      "truthLevel": "inferred"
+    }
+  },
+  "scale": {},
+  "weights": [],
+  "lineHeights": [],
+  "letterSpacing": [],
+  "textTransforms": [],
+  "responsiveType": [],
+  "fontVerification": {
+    "required": true,
+    "method": "Verify exact font before production if not directly known."
+  }
+}

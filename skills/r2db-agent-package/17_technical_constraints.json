@@ -1,0 +1,21 @@
+{
+  "stack": {
+    "framework": "",
+    "language": "",
+    "styling": "",
+    "components": "",
+    "build": ""
+  },
+  "requirements": [],
+  "performance": [
+    "Optimize images",
+    "Avoid unnecessary JS",
+    "Prefer semantic HTML",
+    "Lazy-load non-critical media"
+  ],
+  "browserSupport": [],
+  "integrations": [],
+  "deployment": "",
+  "security": [],
+  "constraints": []
+}

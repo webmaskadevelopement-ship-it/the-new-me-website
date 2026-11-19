@@ -1,0 +1,1181 @@
+/* =========================================================================
+   THE BOOK — book.html
+   A scroll-told book: pinned film (shared primitives from book-film.css)
+   set with proper textbook typography — running heads, folios, definitions,
+   numbered principles, drop caps — revealed by the FadeContent "mist" port.
+   Below the film: the white reader stage (marquee) and the purchase block.
+   ========================================================================= */
+
+/* --------------------------------------------------------------------------
+   Film chapters — the textbook page.
+   Opacity of the type is driven by fade-content.js (per child, mist masks);
+   this sheet only sets type, structure and the soft haze that keeps the
+   text legible over radiant frames. No panels, no cards — the frame is
+   the page.
+   -------------------------------------------------------------------------- */
+.book-page-chapters {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.book-page-chapter {
+  grid-area: 1 / 1;
+  width: min(40rem, calc(100vw - 3.5rem));
+  /* Chapters sit in the calmer upper band of the frame, away from the
+     glowing subjects these shots keep dead-center. */
+  place-self: start center;
+  padding: max(11svh, 88px) 0 0;
+  position: relative;
+}
+
+/* Soft reading haze — atmosphere, not a panel: a wide dark ellipse that
+   fades to nothing before any edge. Keeps white type readable over the
+   films' brightest golden frames. */
+.book-page-chapter::before {
+  content: '';
+  position: absolute;
+  inset: -18% -26%;
+  z-index: -1;
+  background: radial-gradient(
+    62% 62% at 50% 46%,
+    rgba(6, 16, 9, 0.66) 0%,
+    rgba(6, 16, 9, 0.38) 55%,
+    rgba(6, 16, 9, 0) 80%
+  );
+  pointer-events: none;
+}
+
+/* Running head — the printed-page header: book title left, chapter/folio right */
+.bp-running {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.32);
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow: 0 1px 2px rgba(3, 10, 6, 0.6);
+}
+
+.bp-running span:last-child {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.bp-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 4.4vw, 3.3rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin: 0 0 1.15rem;
+  text-shadow:
+    0 4px 72px rgba(3, 10, 6, 0.8),
+    0 2px 4px rgba(3, 10, 6, 0.5);
+}
+
+/* Epigraph reads as front matter: italic, lyric, centered — the way real
+   books set their opening pages. */
+.book-page-chapter[data-chapter='epigraph'] {
+  text-align: center;
+}
+
+.book-page-chapter[data-chapter='epigraph'] .bp-title {
+  font-style: italic;
+  font-weight: 500;
+}
+
+.book-page-chapter[data-chapter='epigraph'] .bp-copy {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Body copy — a true reading serif (Newsreader), set on a book measure */
+.bp-copy {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(1.04rem, 1.25vw, 1.16rem);
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.96);
+  max-width: 34rem;
+  margin: 0;
+  text-shadow:
+    0 1px 2px rgba(3, 10, 6, 0.55),
+    0 2px 34px rgba(3, 10, 6, 0.9);
+}
+
+/* Drop cap — the textbook signature. Applied where a copy block opens a
+   lesson (chapters one and two). */
+.book-page-chapter[data-chapter='chapter-one'] .bp-copy::first-letter,
+.book-page-chapter[data-chapter='chapter-two'] .bp-copy::first-letter {
+  float: left;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  font-size: 3.05em;
+  line-height: 0.82;
+  padding: 0.06em 0.12em 0 0;
+  color: #ffffff;
+  text-shadow: 0 3px 30px rgba(3, 10, 6, 0.85);
+}
+
+/* Definition rows — dictionary entries, hairline separated */
+.bp-defs {
+  margin: 0 0 1.3rem;
+}
+
+.bp-def {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 0.6rem 0;
+}
+
+.bp-def + .bp-def {
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+}
+
+.bp-def-term {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 1.06rem;
+  font-weight: 500;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(3, 10, 6, 0.6);
+}
+
+.bp-def-text {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1.02rem;
+  color: rgba(255, 255, 255, 0.94);
+  text-shadow:
+    0 1px 2px rgba(3, 10, 6, 0.6),
+    0 2px 26px rgba(3, 10, 6, 0.85);
+}
+
+/* Numbered rule (chapter two) — one hairline entry with a roman numeral */
+.bp-rule {
+  display: grid;
+  grid-template-columns: 2.2rem 1fr;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 0.6rem 0 0.75rem;
+  margin: 0 0 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.26);
+}
+
+.bp-rule-num {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.bp-rule p {
+  margin: 0;
+}
+
+.bp-rule em {
+  font-style: italic;
+}
+
+/* Principles (chapter three) — numbered practice rows */
+.bp-principles {
+  margin-top: 0.4rem;
+}
+
+.bp-principle {
+  display: grid;
+  grid-template-columns: 3.1rem 1fr;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.72rem 0;
+}
+
+.bp-principle + .bp-principle {
+  border-top: 1px solid rgba(255, 255, 255, 0.26);
+}
+
+.bp-principle span {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  text-shadow: 0 2px 24px rgba(3, 10, 6, 0.85);
+}
+
+.bp-principle p {
+  margin: 0;
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(1rem, 1.15vw, 1.1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow:
+    0 1px 2px rgba(3, 10, 6, 0.55),
+    0 2px 30px rgba(3, 10, 6, 0.9);
+}
+
+/* Finale — the product page of the book: centered over the calm wide shot */
+.book-page-chapter.bp-finale {
+  place-self: center;
+  padding: 0 0 6svh;
+  text-align: center;
+}
+
+.bp-finale::before {
+  inset: -18% -30%;
+}
+
+.bp-finale-eyebrow {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 1.2rem;
+  text-shadow: 0 1px 2px rgba(3, 10, 6, 0.6);
+}
+
+.bp-finale-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.7rem, 6.4vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0 0 1.3rem;
+  text-shadow:
+    0 6px 90px rgba(3, 10, 6, 0.85),
+    0 2px 4px rgba(3, 10, 6, 0.5);
+}
+
+.bp-finale-tagline {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.12rem, 1.7vw, 1.38rem);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.96);
+  max-width: 32rem;
+  margin: 0 auto 1.5rem;
+  text-shadow:
+    0 1px 2px rgba(3, 10, 6, 0.55),
+    0 2px 34px rgba(3, 10, 6, 0.9);
+}
+
+.bp-finale-author {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.30em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.78);
+  margin: 0;
+  text-shadow: 0 1px 2px rgba(3, 10, 6, 0.6);
+}
+
+/* --------------------------------------------------------------------------
+   Closing whiteout — the film dissolves into light and hands the stage to
+   the white reader section below. Opacity is driven per-frame by
+   book-page.js; no transition (scroll is the transition).
+   -------------------------------------------------------------------------- */
+.book-page-whiteout {
+  position: absolute;
+  inset: 0;
+  /* BELOW the chapters (z5): the white type drowns into the flood and
+     re-emerges in ink on the held page — above canvas/scrim, below text. */
+  z-index: 4;
+  opacity: 0;
+  pointer-events: none;
+  will-change: opacity;
+  /* ── PAPER (procedural, zero-asset) ──────────────────────────────
+     Layered background: a warm cream base, fine fractal grain, and a
+     whisper-soft vignette so the screen reads as a sheet of book paper.
+     The grain is a 128px feTurbulence tile (seeded, static) blended
+     multiply — cheap, crisp at any DPI, invisible to performance. */
+  background-color: #fdfcf9;
+  background-image:
+    radial-gradient(130% 100% at 50% 0%, rgba(0, 0, 0, 0.028) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.018) 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23p)' opacity='0.035'/%3E%3C/svg%3E");
+  background-blend-mode: normal;
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — no pin, no scrub, no marquee motion. Poster as a still;
+   chapters set as a clean typographic page in reading order.
+   -------------------------------------------------------------------------- */
+.book-page-film.reduced-motion .book-page-chapters {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3.25rem;
+  padding: 3.5rem 1.5rem 4rem;
+  pointer-events: auto;
+  background: #050807;
+}
+
+.book-page-film.reduced-motion .book-page-chapter {
+  position: static;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.book-page-film.reduced-motion .book-page-chapter.bp-finale {
+  padding: 0;
+}
+
+.book-page-film.reduced-motion .book-page-whiteout {
+  display: none;
+}
+
+/* --------------------------------------------------------------------------
+   THE WHITE STAGE — reader voices (marquee)
+   Arrived at through the closing white bloom, so the section is pure white
+   and the seam is invisible.
+   -------------------------------------------------------------------------- */
+.book-readers {
+  background: #ffffff;
+  padding: clamp(4.5rem, 9vh, 7rem) 0 3.5rem;
+}
+
+.book-readers-head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.book-readers-eyebrow {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--primary-green, #2a4b2c);
+  margin: 0 0 0.9rem;
+}
+
+.book-readers-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.9rem, 3.6vw, 2.9rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0;
+}
+
+/* Infinite marquee (react-bits pattern, protein-page parity) */
+.reviews-marquee-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 0.5rem 0 1.5rem;
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.reviews-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: bookReadersMarquee 46s linear infinite;
+}
+
+/* Margin (not flex gap) so the duplicated set makes the track exactly two
+   sets wide — the -50% translate loop lands pixel-perfect. */
+.reader-card {
+  margin-right: 1.5rem;
+}
+
+.reviews-marquee-container:hover .reviews-marquee-track,
+.reviews-marquee-container:active .reviews-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes bookReadersMarquee {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Reader card — a page from the book's margins: warm paper, hairline edge */
+.reader-card {
+  width: clamp(300px, 26vw, 380px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 1.7rem 1.7rem 1.4rem;
+  background: #fbfaf6;
+  border: 1px solid #e8e5dc;
+  border-radius: 4px;
+}
+
+.reader-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.reader-stars svg {
+  width: 15px;
+  height: 15px;
+  fill: var(--primary-green, #2a4b2c);
+}
+
+.reader-card blockquote {
+  margin: 0;
+}
+
+.reader-card blockquote p {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: 1.02rem;
+  line-height: 1.7;
+  color: #333333;
+  margin: 0;
+}
+
+.reader-card blockquote p::before {
+  content: '\201C';
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6em;
+  line-height: 0;
+  vertical-align: -0.28em;
+  margin-right: 0.06em;
+  color: var(--primary-green, #2a4b2c);
+}
+
+.reader-card figcaption {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid #e8e5dc;
+}
+
+.reader-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #eef6f0;
+  color: var(--primary-green, #2a4b2c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.reader-who {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.reader-who strong {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.reader-who em {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--primary-green, #2a4b2c);
+}
+
+/* --------------------------------------------------------------------------
+   THE PURCHASE — one decisive block under the reader voices.
+   -------------------------------------------------------------------------- */
+.book-buy {
+  background: var(--bg-off-white, #f8f7f2);
+  border-top: 1px solid var(--border-light, #e0e0e0);
+  padding: clamp(4.5rem, 10vh, 7.5rem) 0;
+}
+
+.book-buy-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.book-buy-cover {
+  display: flex;
+  justify-content: center;
+}
+
+.book-buy-cover img {
+  width: min(100%, 380px);
+  height: auto;
+  border-radius: 4px;
+  box-shadow:
+    0 36px 70px -24px rgba(26, 42, 28, 0.38),
+    0 10px 24px -8px rgba(26, 42, 28, 0.18);
+}
+
+.book-buy-eyebrow {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--primary-green, #2a4b2c);
+  margin: 0 0 0.9rem;
+}
+
+.book-buy-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.3rem, 4.6vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.08;
+  color: var(--text-primary, #1a1a1a);
+  margin: 0 0 0.65rem;
+}
+
+.book-buy-edition {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-secondary, #555555);
+  margin: 0 0 1.4rem;
+}
+
+.book-buy-tagline {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(1.08rem, 1.4vw, 1.22rem);
+  line-height: 1.75;
+  color: #333333;
+  max-width: 34rem;
+  margin: 0 0 2.2rem;
+}
+
+.book-buy-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.4rem;
+}
+
+.book-buy-btn {
+  padding: 1rem 2.2rem;
+  font-size: 1rem;
+}
+
+.book-buy-amazon {
+  height: 34px;
+  width: auto;
+  align-self: center;
+  margin-top: 2px;
+  opacity: 0.9;
+}
+
+.book-buy-awards {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  padding-bottom: 2.2rem;
+  border-bottom: 1px solid var(--border-light, #e0e0e0);
+  margin-bottom: 1.8rem;
+}
+
+.book-buy-awards img {
+  height: 58px;
+  width: auto;
+}
+
+.book-buy-author {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+}
+
+.book-buy-author-name {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-primary, #1a1a1a);
+}
+
+.book-buy-signature {
+  height: 34px;
+  width: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Mobile
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .book-buy-inner {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .book-buy-tagline {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .book-buy-actions,
+  .book-buy-awards,
+  .book-buy-author {
+    justify-content: center;
+  }
+
+  .book-buy-awards {
+    gap: 1rem;
+  }
+
+  .book-buy-awards img {
+    height: 48px;
+  }
+}
+
+@media (max-width: 768px) {
+  .book-page-chapter {
+    width: min(40rem, calc(100vw - 2.5rem));
+    padding-top: max(10svh, 76px);
+  }
+
+  .bp-title {
+    font-size: clamp(1.7rem, 7vw, 2.3rem);
+  }
+
+  .bp-copy {
+    font-size: 1rem;
+    line-height: 1.72;
+  }
+
+  .bp-def {
+    grid-template-columns: 1fr;
+    gap: 0.15rem;
+  }
+
+  .bp-principle {
+    grid-template-columns: 2.4rem 1fr;
+    gap: 0.8rem;
+  }
+
+  .reviews-marquee-track {
+    animation-duration: 34s;
+  }
+
+  .reader-card {
+    width: 290px;
+    margin-right: 1rem;
+    padding: 1.3rem 1.2rem 1.1rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — marquee becomes a patient horizontal scroller.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reviews-marquee-track {
+    animation: none !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    width: 100%;
+    padding-bottom: 0.75rem;
+  }
+
+  .reader-card {
+    scroll-snap-align: start;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   White stage — press row + from-the-pages quote row (honest content).
+   -------------------------------------------------------------------------- */
+.press-marquee {
+  padding: 0.25rem 0 0.75rem;
+}
+
+.press-track {
+  animation-duration: 52s;
+}
+
+.press-item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 2.75rem;
+  filter: grayscale(1);
+  opacity: 0.6;
+  transition: filter 0.35s ease, opacity 0.35s ease;
+}
+
+.press-item:hover,
+.press-item:focus-visible {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+.press-item img {
+  height: 42px;
+  width: auto;
+}
+
+.book-pages-quotes-head {
+  margin-top: 2.4rem;
+  text-align: center;
+}
+
+.quotes-marquee {
+  padding-top: 0.5rem;
+}
+
+.quotes-track {
+  animation-direction: reverse;
+  animation-duration: 66s;
+}
+
+.quote-card {
+  max-width: 30rem;
+}
+
+.quote-card .reader-who strong {
+  font-style: normal;
+}
+
+@media (max-width: 768px) {
+  .press-item {
+    margin: 0 1.9rem;
+  }
+
+  .press-item img {
+    height: 32px;
+  }
+
+  .quote-card {
+    max-width: 24rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   ScrollTrigger restores the stylesheet's scroll-behavior after every
+   programmatic scroll (it re-applies "smooth" from style.css over our
+   inline auto — measured live). A film page must stay auto or the restore
+   re-introduces smooth-scroll jitter during pinned transforms.
+   !important author rule beats the inline style ScrollTrigger writes.
+   -------------------------------------------------------------------------- */
+html:has(body.has-scroll-film) {
+  scroll-behavior: auto !important;
+}
+
+/* ==========================================================================
+   OPEN-BOOK SPREADS (v2) — the user's format:
+   film carries the kicker + title in white; each baked bloom floods white
+   and the SAME block re-sets in ink as a two-page spread (left/right).
+   The dark legibility gradient is GONE — type sits directly on the film.
+   ========================================================================== */
+
+/* Kill the dark green radial that sat behind every chapter (user: ugly) */
+.book-page-chapter::before {
+  content: none;
+}
+
+/* Film phase: kicker + title only; spread hidden */
+.book-page-chapter .bp-spread {
+  display: none;
+}
+
+/* White phase: the spread opens like a two-page book */
+.book-page-chapter.on-white .bp-spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.25rem;
+  max-width: 62rem;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.bp-page {
+  font-family: 'Newsreader', Georgia, serif;
+  font-size: clamp(0.98rem, 1.12vw, 1.09rem);
+  font-weight: 400;
+  line-height: 1.78;
+  letter-spacing: 0.002em;
+}
+
+.bp-page p {
+  margin: 0;
+}
+
+.bp-page p + p {
+  margin-top: 1.05em;
+}
+
+/* Drop cap on the left page — the newspaper opening */
+/* drop cap is now a manual .bp-dropcap span (line splitting replaces ::first-letter) */
+
+/* Ink re-set on the white page (was white-on-film) */
+.book-page-chapter.on-white .bp-running {
+  border-bottom-color: rgba(19, 26, 18, 0.28);
+}
+
+.book-page-chapter.on-white .bp-running span {
+  color: rgba(19, 26, 18, 0.72);
+  text-shadow: none;
+}
+
+.book-page-chapter.on-white .bp-title,
+.book-page-chapter.on-white .bp-finale-title {
+  color: #131a12;
+  text-shadow: none;
+}
+
+.book-page-chapter.on-white .bp-page {
+  color: #1c241a;
+}
+
+.book-page-chapter .bp-page {
+  color: #1c241a;
+  text-shadow: none;
+}
+
+/* On-white spread is centered in the upper-safe zone, roomier */
+.book-page-chapter.on-white {
+  place-self: center center;
+  padding: 0 2rem;
+  max-width: 70rem;
+}
+
+/* Pull-quote (S4) — one italic line, white on film */
+.bp-quote-line {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.3;
+  color: #ffffff;
+  margin: 0;
+  text-shadow:
+    0 4px 72px rgba(3, 10, 6, 0.8),
+    0 2px 4px rgba(3, 10, 6, 0.5);
+}
+
+/* Finale CTA — clickable only while active */
+.book-page-chapter .book-chapter-cta {
+  pointer-events: none;
+}
+
+.book-page-chapter.is-active .book-chapter-cta {
+  pointer-events: auto;
+}
+
+.book-page-chapter.on-white .bp-finale-tagline {
+  color: #1c241a;
+  text-shadow: none;
+}
+
+/* Mobile: spread stacks to a single readable column */
+@media (max-width: 768px) {
+  .book-page-chapter.on-white .bp-spread {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    max-width: 30rem;
+  }
+
+  .book-page-chapter.on-white {
+    padding: 0 1.4rem;
+  }
+
+  .bp-page:first-child p:first-of-type::first-letter {
+    font-size: 2.6em;
+  }
+}
+
+/* Reduced motion: spreads visible, ink on the white poster area */
+.book-film-section.reduced-motion .bp-spread,
+.book-page-film.reduced-motion .bp-spread {
+  display: grid !important;
+  grid-template-columns: 1fr;
+  gap: 1.6rem;
+}
+
+.book-film-section.reduced-motion .book-page-chapter,
+.book-page-film.reduced-motion .book-page-chapter {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ==========================================================================
+   v3 EDITORIAL CRAFT — line-mask title rise, running-head settle,
+   scroll-linked paragraph reveals (ink on the white spread).
+   ========================================================================== */
+
+/* Line-mask rise: the title rises out of its own baseline, editorial style */
+.bp-title {
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.bp-title-inner,
+.bp-finale-title-inner {
+  display: inline-block;
+  transform: translateY(118%);
+  transition: transform 1.25s cubic-bezier(0.22, 1, 0.36, 1) 0.12s;
+  will-change: transform;
+}
+
+.book-page-chapter.is-active .bp-title-inner,
+.book-page-chapter.is-active .bp-finale-title .bp-title-inner {
+  transform: translateY(0);
+}
+
+/* Running head: fades in while its tracking settles from wide to final */
+.bp-running {
+  opacity: 0;
+  transition: opacity 0.9s ease 0.1s;
+}
+
+.bp-running span {
+  letter-spacing: 0.55em;
+  transition: letter-spacing 1.7s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+}
+
+.book-page-chapter.is-active .bp-running {
+  opacity: 1;
+}
+
+.book-page-chapter.is-active .bp-running span {
+  letter-spacing: 0.3em;
+}
+
+/* White-to-ink transform must be felt: smooth color on the flood, never
+   white-on-white. (Engine starts on-white at the ramp, not the hold.) */
+.bp-title,
+.bp-running span,
+.bp-finale-title {
+  transition-property: transform, color;
+  transition-duration: 0.7s, 0.7s;
+}
+
+.bp-page p {
+  transition: none; /* opacity is scrubbed per scroll step by the engine */
+}
+
+/* Paragraph defaults: hidden only when the engine will drive them */
+@media (prefers-reduced-motion: no-preference) {
+  .book-page-chapter .bp-page p {
+    opacity: 0;
+  }
+}
+
+/* Spread layout while paragraphs are arriving: pages top-aligned */
+.book-page-chapter.on-white .bp-spread {
+  align-items: start;
+}
+
+/* Reduced motion: everything readable, no masks */
+@media (prefers-reduced-motion: reduce) {
+  .bp-title-inner,
+  .bp-finale-title-inner {
+    transform: none;
+    transition: none;
+  }
+
+  .bp-running {
+    opacity: 1;
+    transition: none;
+  }
+
+  .bp-running span {
+    letter-spacing: 0.3em;
+    transition: none;
+  }
+}
+
+/* Container visibility: only the active block shows (stacked grid);
+   the engine toggles .is-active, everything else stays hidden. */
+.book-page-chapter {
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.book-page-chapter.is-active {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   v5 — REACT BITS SplitText port (line-by-line) + adaptive ink + speed
+   ========================================================================== */
+
+/* Word measurement helper: MUST stay inline so measured line breaks
+   match the final natural wrapping exactly */
+.bp-w {
+  display: inline;
+}
+
+/* Line masks: each rendered line rises out of its own clip */
+.bp-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+
+.bp-line-inner {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* Spread lines: scroll-scrubbed by the engine — no CSS transition */
+.bp-spread .bp-line-inner {
+  transition: none;
+}
+
+/* Title lines: class-driven rise, snappy (0.75s, staggered via inline delay) */
+.bp-title .bp-line-inner,
+.bp-finale-title .bp-line-inner {
+  transform: translateY(118%);
+  opacity: 0;
+  transition:
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.45s ease,
+    color 0.5s ease,
+    text-shadow 0.5s ease;
+}
+
+.book-page-chapter.is-active .bp-title .bp-line-inner,
+.book-page-chapter.is-active .bp-finale-title .bp-line-inner {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Running head: tightened (was 1.7s — too slow) */
+.bp-running {
+  transition: opacity 0.5s ease 0.05s;
+}
+
+.bp-running span {
+  transition: letter-spacing 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s, color 0.5s ease;
+}
+
+/* Adaptive ink — bright frames flip white type to ink (print on a page) */
+.book-page-chapter.ink-title .bp-line-inner,
+.book-page-chapter.ink-title .bp-running span,
+.book-page-chapter.ink-title .bp-quote-line {
+  color: #131a12;
+  text-shadow: none;
+}
+
+/* Drop cap: manual span (first-letter breaks after line splitting) */
+.bp-dropcap {
+  float: left;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3em;
+  font-weight: 600;
+  line-height: 0.82;
+  margin: 0.05em 0.12em 0 0;
+}
+
+/* Manual drop cap must not inherit the line mask */
+.bp-line-inner .bp-dropcap {
+  float: left;
+}
+
+/* Reduced motion: lines settled, everything readable */
+@media (prefers-reduced-motion: reduce) {
+  .bp-line-inner {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none !important;
+  }
+}
+
+/* Measurement geometry: must mirror the on-white spread EXACTLY so the
+   measured line breaks match the rendered ones */
+.book-page-chapter.bp-measure {
+  place-self: center center;
+  max-width: 70rem;
+  padding: 0 2rem;
+  opacity: 0;
+}
+
+.book-page-chapter.bp-measure .bp-spread {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.25rem;
+  max-width: 62rem;
+  margin: 0 auto;
+  text-align: left;
+  visibility: hidden;
+}
+
+@media (max-width: 768px) {
+  .book-page-chapter.bp-measure {
+    padding: 0 1.4rem;
+  }
+
+  .book-page-chapter.bp-measure .bp-spread {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    max-width: 30rem;
+  }
+}
+
+/* ==========================================================================
+   USER STRICT RULE: plain text on the film. No boxes, no gradients, no
+   translucent "shit" behind type, no halos. Kill anything that was not
+   the ink glyph itself.
+   ========================================================================== */
+.book-page-chapter::before,
+.book-page-chapter::after {
+  content: none !important;
+  display: none !important;
+}
+
+.book-page-chapter,
+.book-page-chapter * {
+  background: transparent !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* Pull-quote support lines — completed thought, book-style */
+.bp-quote-sub {
+  font-family: 'Newsreader', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.94);
+  max-width: 34rem;
+  margin: 1.2rem auto 0;
+}
+
+.bp-quote-source {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 1.4rem 0 0;
+}

@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "generated": "2026-11-19",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "quality": 80,
+  "totalFrames": 306,
+  "note": "frames 77-101 removed; sequence rebased 0..305",
+  "chapters": {
+    "t1": {
+      "start": 0,
+      "end": 45
+    },
+    "t2a": {
+      "start": 46,
+      "end": 64
+    },
+    "t2b": {
+      "start": 68,
+      "end": 76
+    },
+    "t3a": {
+      "start": 77,
+      "end": 93
+    },
+    "t3b": {
+      "start": 115,
+      "end": 163
+    },
+    "quote": {
+      "start": 188,
+      "end": 259
+    },
+    "finale": {
+      "start": 260,
+      "end": 305
+    }
+  }
+}

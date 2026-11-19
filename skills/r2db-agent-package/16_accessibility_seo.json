@@ -1,0 +1,25 @@
+{
+  "accessibility": {
+    "semanticHTML": true,
+    "headingHierarchy": true,
+    "keyboardNavigation": true,
+    "visibleFocus": true,
+    "colorContrast": "WCAG AA target",
+    "altText": true,
+    "reducedMotion": true,
+    "formLabels": true,
+    "touchTargetReview": true,
+    "errorMessaging": true
+  },
+  "seo": {
+    "primaryKeyword": "",
+    "searchIntent": "",
+    "title": "",
+    "metaDescription": "",
+    "canonical": "",
+    "structuredData": [],
+    "internalLinking": [],
+    "imageSEO": [],
+    "notes": ""
+  }
+}

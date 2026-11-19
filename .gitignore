@@ -1,18 +1,59 @@
-# OS & metadata files
+# macOS System Artifacts & Resource Forks
 .DS_Store
+.AppleDouble
+.LSOverride
+Icon
 ._*
-Thumbs.db
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
-# Temporary directories
-temp_overlays/
+# Windows Thumbnail Caches
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+[Dd]esktop.ini
+
+# Linux / System
+*~
+.fuse_hidden*
+.directory
+
+# Node & Toolchains
 node_modules/
+.toolchain/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment & Secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# IDE & Editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Build & Hosting Outputs
+dist/
+build/
+.output/
+.vercel/
 .netlify/
 
-# Local tooling artifacts
-scripts/__pycache__/
-*.log
-
-# Real env files (never commit); keep the .env.example template
-.env
-.env.*
-!.env.example
+# Local Temporary / Working Directories
+temp_frames/
+temp_overlays/
+scratch/
+.agents/
+.gemini/

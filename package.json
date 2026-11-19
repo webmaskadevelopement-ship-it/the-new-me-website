@@ -5,14 +5,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "node scripts/dev-server.mjs",
-    "dev": "node scripts/dev-server.mjs",
-    "serve": "node scripts/dev-server.mjs",
-    "build": "echo 'Static production ready. (Tailwind CSS is precompiled in vendor/tailwind.prod.css)'",
-    "deploy": "./deploy.sh",
-    "push": "./deploy.sh",
-    "build:css": "tailwindcss -c scripts/tailwind.config.js -i scripts/tailwind.input.css -o vendor/tailwind.prod.css --minify",
-    "scan:secrets": "bash scripts/scan-secrets.sh"
+    "dev": "python3 -m http.server 8000",
+    "start": "python3 -m http.server 8000",
+    "clean": "python3 scripts/clean-ghosts.py",
+    "build": "echo 'Static production ready. Publish directory is repo root.'",
+    "serve": "python3 -m http.server 8000"
   },
   "keywords": [
     "wellness",
