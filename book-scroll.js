@@ -469,7 +469,8 @@
                 // opacity+blur ramp on top of the mist mask.
                 this.gsap.fromTo(pt.words,
                   { opacity: 0, filter: 'blur(4px)' },
-                  { opacity: 1, filter: 'blur(0px)', stagger: 0.045, duration: 0.9, ease: 'power2.out', overwrite: true }
+                  { opacity: 1, filter: 'blur(0px)', stagger: 0.045, duration: 0.9, ease: 'power2.out', overwrite: true,
+                    onComplete: () => this.gsap.set(pt.words, { clearProps: 'transform,filter' }) }
                 );
                 // Safety: never allow a blank block — if the mist reveal is
                 // stalled (~1.5s) force words visible.

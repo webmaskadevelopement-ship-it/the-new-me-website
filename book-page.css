@@ -1297,3 +1297,42 @@ html.js-splitting .book-page-chapter .bp-page p {
   max-width: 40rem;
   margin: 0 auto;
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   MOBILE TEXT TYPOGRAPHY — clean, even, organized
+   ════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .book-page-chapter.is-active {
+    padding: 0 20px;
+  }
+
+  /* Headline: compact but balanced */
+  .book-page-chapter .bp-title .bp-line-inner {
+    font-size: 22px;
+    line-height: 1.28;
+    letter-spacing: -0.01em;
+  }
+
+  /* One-liner body: comfortable, even rhythm */
+  .book-page-chapter .bp-page p {
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  /* Words must flow as an inline text stream — no inline-block artifacts */
+  .book-page-chapter .bp-w {
+    display: inline !important;
+    white-space: normal;
+  }
+
+  /* Even breathing between headline and sub-line */
+  .book-page-chapter .bp-spread {
+    margin-top: 1.1rem;
+  }
+
+  /* Drop cap: float breaks mobile rhythm — disable */
+  .book-page-chapter .bp-dropcap {
+    display: none;
+  }
+}
