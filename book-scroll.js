@@ -460,6 +460,12 @@
               if (state === 'in') {
                 this.gsap.set(pt.words, { visibility: 'visible' });
                 pt.fader.play();
+                // Guarantee a perceivable react-bits-style fade: per-word
+                // opacity+blur ramp on top of the mist mask.
+                this.gsap.fromTo(pt.words,
+                  { opacity: 0, filter: 'blur(4px)' },
+                  { opacity: 1, filter: 'blur(0px)', stagger: 0.045, duration: 0.9, ease: 'power2.out', overwrite: true }
+                );
                 // Safety: never allow a blank block — if the mist reveal is
                 // stalled (~1.5s) force words visible.
                 if (pt.guard) clearTimeout(pt.guard);

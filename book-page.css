@@ -860,8 +860,10 @@ html:has(body.has-scroll-film) {
 }
 
 /* On-white spread is centered in the upper-safe zone, roomier */
-/* Unified text placement — identical on video backdrop and white page */
-.book-page-chapter.is-active {
+/* Unified text placement — identical on video backdrop and white page.
+   Applied on the BASE chapter so there is never a top-position flash
+   before the engine adds .is-active. */
+.book-page-chapter {
   place-self: center center;
   text-align: center;
   padding: 0 2rem;
