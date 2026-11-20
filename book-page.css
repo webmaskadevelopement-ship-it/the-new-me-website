@@ -1278,3 +1278,22 @@ html:has(body.has-scroll-film) {
   max-width: 40rem;
   text-align: center;
 }
+
+/* While the engine is still preparing the line-split, no text is shown —
+   this kills the split-second raw-text flash at page start. */
+html.js-splitting .book-page-chapter .bp-title,
+html.js-splitting .book-page-chapter .bp-page p {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+/* Sub-line (one-liner copy) shows on BOTH film and white, centered */
+.book-page-chapter .bp-spread {
+  display: block;
+  margin-top: 1.4rem;
+}
+
+.book-page-chapter .bp-page {
+  max-width: 40rem;
+  margin: 0 auto;
+}

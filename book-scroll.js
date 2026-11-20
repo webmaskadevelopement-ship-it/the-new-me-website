@@ -143,6 +143,8 @@
       this.lineWins = [];
       this.paraTweens = []; // FadeContent mist faders per paragraph (word-by-word)
 
+      document.documentElement.classList.add('js-splitting');
+
       this.initLenis();
       this.preloadFrames();
       this.initScrollTrigger();
@@ -168,7 +170,7 @@
     buildUniverse() {
       const isDesktop = this.isDesktop;
       const spfScale = isDesktop ? 1 : 0.72;
-      const holdSteps = isDesktop ? 150 : 110;
+      const holdSteps = isDesktop ? 230 : 160;
       const map = [];
       const phases = [];
 
@@ -653,6 +655,7 @@
           pEl.style.opacity = '1';
           pEl.style.visibility = 'visible';
         });
+        document.documentElement.classList.remove('js-splitting');
       }, 3000);
 
       // Re-split on width change (line breaks depend on column width)
@@ -780,6 +783,7 @@
         });
       });
       this.splitReady = true;
+      document.documentElement.classList.remove('js-splitting');
     }
   }
 
