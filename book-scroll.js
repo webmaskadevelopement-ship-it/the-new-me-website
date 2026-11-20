@@ -170,7 +170,7 @@
     buildUniverse() {
       const isDesktop = this.isDesktop;
       const spfScale = isDesktop ? 1 : 0.72;
-      const holdSteps = isDesktop ? 230 : 160;
+      const holdSteps = isDesktop ? 120 : 90;
       const map = [];
       const phases = [];
 
@@ -415,7 +415,10 @@
         const hasWhite = !!ph.white;
         const isQuoteOrFinale = b.id === 'quote' || b.id === 'finale';
         const activeEnd = b.id === 'finale' ? U.totalSteps : (hasWhite ? ph.white.downStart : ph.filmEnd);
-        const active = stepIdx >= ph.filmStart - 1 && stepIdx < activeEnd;
+        // Activation begins at the paper (white) phase — the opening film
+        // carries no text at all.
+        const activeStart = hasWhite ? ph.white.upStart : ph.filmStart;
+        const active = stepIdx >= activeStart && stepIdx < activeEnd;
         const inWhite = hasWhite && stepIdx >= ph.white.upStart + 1 && stepIdx < ph.white.downStart;
 
         const state = active ? (inWhite ? 'white' : 'film') : '';
