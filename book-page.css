@@ -860,8 +860,10 @@ html:has(body.has-scroll-film) {
 }
 
 /* On-white spread is centered in the upper-safe zone, roomier */
-.book-page-chapter.on-white {
+/* Unified text placement — identical on video backdrop and white page */
+.book-page-chapter.is-active {
   place-self: center center;
+  text-align: center;
   padding: 0 2rem;
   max-width: 70rem;
 }
@@ -1224,13 +1226,7 @@ html:has(body.has-scroll-film) {
   display: flex;
 }
 
-/* Film headline: pure center-aligned statement over the image */
-.book-page-chapter.is-active:not(.on-white) .bp-title {
-  place-self: center;
-  text-align: center;
-  max-width: 44rem;
-  padding: 0 1.5rem;
-}
+
 
 
 
