@@ -1273,3 +1273,10 @@ html:has(body.has-scroll-film) {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* One-liner white pages (client: text = one liners) */
+.book-page-chapter.on-white .bp-spread:has(.bp-page:only-child) {
+  grid-template-columns: 1fr;
+  max-width: 40rem;
+  text-align: center;
+}

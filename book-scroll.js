@@ -113,7 +113,7 @@
       // Text blocks in DOM order: t1, t2, t3 (spreads), quote, finale
       this.blocks = [];
       const els = document.querySelectorAll(SECTION_SEL + ' .book-page-chapter');
-      const phaseFor = { t1: 0, t2: 1, t3: 2, quote: 3, finale: 4 };
+      const phaseFor = { a: 0, b: 1, finale: 2 };
       const paras = Array.prototype.slice.call(
         document.querySelectorAll(SECTION_SEL + ' .book-page-chapter .bp-page p')
       );
@@ -168,7 +168,7 @@
     buildUniverse() {
       const isDesktop = this.isDesktop;
       const spfScale = isDesktop ? 1 : 0.72;
-      const holdSteps = isDesktop ? 480 : 340;
+      const holdSteps = isDesktop ? 150 : 110;
       const map = [];
       const phases = [];
 
@@ -192,11 +192,9 @@
       // Phase plan: t3's film is the two clean tunnel runs (102-118 + 140-188)
       // spliced with a hard cut; the flare morphs stay on the cutting floor.
       const PHASES = [
-        // t1: pure film — first white block removed (user decision)
-        { id: 't1', segIdx: 0, extra: null, hold: 0, paras: 0, headHold: 0 },
-        { id: 't2', segIdx: 1, extra: 2, hold: holdSteps, paras: 4, headHold: HEAD_HOLD },
-        { id: 't3', segIdx: 3, extra: 4, hold: holdSteps, paras: 4, headHold: HEAD_HOLD },
-        { id: 'quote', segIdx: 5, extra: null, hold: 280, paras: 0, headHold: HEAD_HOLD },
+        // Client: max 3 scrolls, text = one-liners.
+        { id: 'a', segIdx: 0, extra: null, hold: holdSteps, paras: 1, headHold: HEAD_HOLD },
+        { id: 'b', segIdx: 3, extra: 4, hold: holdSteps, paras: 1, headHold: HEAD_HOLD },
         { id: 'finale', segIdx: 6, extra: null, hold: 0, paras: 0, headHold: 0 }
       ];
 
@@ -227,12 +225,10 @@
             : null,
           paras: ph.paras
             ? [0, 1, 2, 3].map((p) => [
-                // words start arriving WITH the white page
-                holdStart + 6 + p * 14,
-                holdStart + 42 + p * 14,
-                // fully-read dwell: out-cascade only near the very end
-                holdEnd - 150 + p * 12,
-                holdEnd - 80 + p * 12
+                holdStart + 6 + p * 8,
+                holdStart + 32 + p * 8,
+                holdEnd - 18 + p * 4,
+                holdEnd - 6 + p * 4
               ])
             : null
         });
