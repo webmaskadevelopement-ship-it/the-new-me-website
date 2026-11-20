@@ -1,9 +1,0 @@
-{
-  "observedMotion": [],
-  "recommendedMotion": [],
-  "interactionStates": [],
-  "reducedMotion": {
-    "required": true,
-    "behavior": "Respect prefers-reduced-motion."
-  }
-}
