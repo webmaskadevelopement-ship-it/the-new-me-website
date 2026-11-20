@@ -3160,3 +3160,10 @@ body.drawer-open {
 html:has(body.has-scroll-film) {
   scroll-behavior: auto !important;
 }
+
+/* Cart badge: hide when count is 0 (quick cleanup) */
+.cart-badge:empty,
+.cart-badge[data-count="0"],
+.cart-badge:has(> 0):not([data-count]) {
+  display: none;
+}

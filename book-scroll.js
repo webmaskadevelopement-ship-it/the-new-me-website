@@ -717,14 +717,26 @@
       return Array.from(el.querySelectorAll('.bp-line-inner'));
     }
 
-    // Wrap every word in an inline span (children = words for FadeContent)
+    // Wrap every word in an inline span (children = words for FadeContent).
+    // The instruct clause (span.bp-lead) keeps its words tagged so the
+    // brand-green lead-in survives the word split.
     mistWords(el, dropcap) {
+      const lead = el.querySelector('span.bp-lead');
+      const leadText = lead ? (lead.textContent || '').trim() : '';
+      const leadWords = leadText ? leadText.split(/\s+/).length : 0;
+
       const raw = (el.textContent || '').trim().replace(/\s+/g, ' ');
       if (!raw) return [];
       const cap = dropcap && /[A-Za-z]/.test(raw.charAt(0)) ? raw.charAt(0) : null;
       const text = cap ? raw.slice(1) : raw;
-      el.innerHTML = (cap ? `<span class="bp-dropcap">${cap}</span> ` : '') +
-        text.split(' ').map((w) => `<span class="bp-w">${w}</span>`).join(' ');
+      const words = text.split(' ');
+
+      let html = cap ? `<span class="bp-dropcap">${cap}</span> ` : '';
+      words.forEach((w, i) => {
+        const cls = i < leadWords ? 'bp-w bp-lead-w' : 'bp-w';
+        html += `<span class="${cls}">${w}</span> `;
+      });
+      el.innerHTML = html.trim();
       return Array.from(el.querySelectorAll('.bp-w'));
     }
 

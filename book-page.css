@@ -304,7 +304,7 @@
      whisper-soft vignette so the screen reads as a sheet of book paper.
      The grain is a 128px feTurbulence tile (seeded, static) blended
      multiply — cheap, crisp at any DPI, invisible to performance. */
-  background-color: #fdfcf9;
+  background-color: #FAF9F6;
   background-image:
     radial-gradient(130% 100% at 50% 0%, rgba(0, 0, 0, 0.028) 0%, rgba(0, 0, 0, 0) 42%, rgba(0, 0, 0, 0.018) 100%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch' seed='7'/%3E%3C/filter%3E%3Crect width='128' height='128' filter='url(%23p)' opacity='0.035'/%3E%3C/svg%3E");
@@ -910,9 +910,7 @@ html:has(body.has-scroll-film) {
     padding: 0 1.4rem;
   }
 
-  .bp-page:first-child p:first-of-type::first-letter {
-    font-size: 2.6em;
-  }
+
 }
 
 /* Reduced motion: spreads visible, ink on the white poster area */
@@ -1092,19 +1090,7 @@ html:has(body.has-scroll-film) {
 }
 
 /* Drop cap: manual span (first-letter breaks after line splitting) */
-.bp-dropcap {
-  float: left;
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 3em;
-  font-weight: 600;
-  line-height: 0.82;
-  margin: 0.05em 0.12em 0 0;
-}
 
-/* Manual drop cap must not inherit the line mask */
-.bp-line-inner .bp-dropcap {
-  float: left;
-}
 
 /* Short viewports: keep the whole spread inside the pinned screen */
 @media (max-height: 780px) {
@@ -1183,6 +1169,11 @@ html:has(body.has-scroll-film) {
   background: transparent !important;
   box-shadow: none !important;
   text-shadow: none !important;
+}
+
+/* The directive's brand-green hairline divider survives the transparent sweep */
+.bp-rule-divider {
+  background: rgba(46, 79, 38, 0.35) !important;
 }
 
 /* Quote ink on the white paper (was white-on-white = invisible) */
@@ -1334,5 +1325,66 @@ html.js-splitting .book-page-chapter .bp-page p {
   /* Drop cap: float breaks mobile rhythm — disable */
   .book-page-chapter .bp-dropcap {
     display: none;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   MOBILE EDITORIAL TYPOGRAPHY (system directive)
+   Locked tokens • centered column • uniform rhythm • brand green lead
+   ════════════════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  /* Section surface + layout */
+  .book-page-chapter.is-active {
+    background: #FAF9F6;
+    padding: 0 28px 48px; /* px-7 + optical lift (pb-12) */
+    max-width: 100%;
+  }
+
+  /* Headline: 28px, off-black, balanced */
+  .book-page-chapter .bp-title {
+    font-size: 28px !important;
+    font-weight: 500;
+    line-height: 1.18 !important;
+    letter-spacing: -0.02em;
+    color: #181B18 !important;
+    text-wrap: balance;
+  }
+  .book-page-chapter .bp-title .bp-line-inner {
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  /* Hairline divider: brand green, 35% */
+  .bp-rule-divider {
+    width: 28px;
+    height: 1.5px;
+    background: rgba(46, 79, 38, 0.35);
+    margin: 20px auto;
+  }
+
+  /* Body copy: 17px, uniform 1.68 line-height */
+  .book-page-chapter .bp-page p {
+    font-size: 17px;
+    font-weight: 400;
+    line-height: 1.68;
+    letter-spacing: 0;
+    color: #464B46;
+    max-width: 34ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    text-wrap: balance;
+  }
+
+  /* Brand green lead-in clause */
+  .book-page-chapter .bp-lead-w {
+    color: #2E4F26 !important;
+    font-weight: 500;
+    text-shadow: none !important;
+  }
+
+  .book-page-chapter .bp-spread {
+    margin-top: 0;
   }
 }
